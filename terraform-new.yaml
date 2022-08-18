@@ -12,7 +12,7 @@ pool:
   vmImage: 'ubuntu-latest'
 
 stages: 
-- stage: Setup
+- stage: Terraform_Setup
   jobs:
     - job: Install_Terraform
       steps:
@@ -29,7 +29,7 @@ stages:
         displayName: 'Verify_files'
       
 - stage: Plan_Terraform
-  dependsOn: [Setup]
+  dependsOn: [Terraform_Setup]
   jobs:
     - job: Plan_Terraform
       steps:
@@ -61,7 +61,7 @@ stages:
         artifact: dev_artifacts
 
 - stage: Apply_On_Parallo
-  dependsOn: [Setup, Plan_Terraform]
+  dependsOn: [Terraform_Setup, Plan_Terraform]
   jobs:
   - deployment: 
     displayName: DEV
