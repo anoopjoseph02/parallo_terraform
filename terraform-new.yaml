@@ -44,10 +44,10 @@ stages:
               echo "=====================List all the files of main folder============================"
               cd $(System.DefaultWorkingDirectory)/platform
               
-              echo "========================================== COPY File to dev environment ======================================"
+              #echo "========================================== COPY File to dev environment ======================================"
               
-              cp -v -r * $(System.DefaultWorkingDirectory)/src/dev 
-              cd $(System.DefaultWorkingDirectory)/src/dev
+              #cp -v -r * $(System.DefaultWorkingDirectory)/src/dev 
+              #cd $(System.DefaultWorkingDirectory)/src/dev
               echo "list all the files"
               ls 
               az login --service-principal -u 290f6b48-7a20-4473-aea2-087b240ac884 -p BVL8Q~qPOsHHnaFLnLyHIw65mfQ5TT6UYO6sHbwB --tenant 6594e148-8146-4b66-b2ea-704e1a0d83c0
