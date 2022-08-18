@@ -14,7 +14,7 @@ pool:
 stages: 
 - stage: Setup
   jobs:
-    - job: Install Terraform
+    - job: Install_Terraform
       steps:
       - task: TerraformInstaller@0
         inputs:
@@ -26,12 +26,12 @@ stages:
               cd $(System.DefaultWorkingDirectory)/platform
               echo "list all the files"
               ls 
-        displayName: 'Verify files'
+        displayName: 'Verify_files'
       
 - stage: Plan_Terraform
   dependsOn: [Setup]
   jobs:
-    - job: Terraform plan
+    - job: Plan_Terraform
       steps:
       - script: |
               echo "=====================List all the files of main folder============================"
