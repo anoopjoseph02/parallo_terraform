@@ -66,7 +66,7 @@ stages:
         inputs:
             SourceFolder: '$(System.DefaultWorkingDirectory)/platform'
             Contents: |
-                      **/*
+                      **
                       !dev/.terraform/**/*
             TargetFolder: '$(Build.ArtifactStagingDirectory)'
         displayName: 'Copy Artifacts'
@@ -84,15 +84,13 @@ stages:
      runOnce:
         deploy:
            steps:
-            
             - download: current 
               artifact: dev_artifacts
-
             - script: |
                     echo "Deploy to Move to directory"
-                      ls $(Pipeline.Workspace)/dev_artifacts/dev
+                      ls $(Pipeline.Workspace)/dev_artifacts/
                       echo "=====================List all the files of main folder============================"
-                      cd $(Pipeline.Workspace)/dev_artifacts/dev
+                      cd $(Pipeline.Workspace)/dev_artifacts/
                       
                       #echo "========================================== COPY File to dev environment ======================================"
                       
