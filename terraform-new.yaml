@@ -102,6 +102,7 @@ stages:
                       export ARM_SUBSCRIPTION_ID="78b403c6-7d6d-4d7f-b32c-5635479016fb"
                       export ARM_TENANT_ID="6594e148-8146-4b66-b2ea-704e1a0d83c0"
                      terraform init
+                     chmod +x .terraform/providers/registry.terraform.io/hashicorp/azurerm/3.18.0/linux_amd64/terraform-provider-azurerm_v3.18.0_x5
                
                      echo ##############~~~~~~~~~~~~~~~Terraform Plan~~~~~~~~~~~~~~###############
                      terraform plan -var-file="../env/dev/dev-env.tfvars" -out="out.plan"
