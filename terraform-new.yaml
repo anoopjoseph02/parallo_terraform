@@ -91,8 +91,7 @@ stages:
                     echo "Deploy to Move to directory"
                       ls $(Pipeline.Workspace)/dev_artifacts/
                       echo "=====================List all the files of main folder============================"
-                      cd $(Pipeline.Workspace)/dev_artifacts/
-                      ls $(Pipeline.Workspace)/dev_artifacts/
+                      cd $(Pipeline.Workspace)/dev_artifacts/platform
                       
                       #echo "========================================== COPY File to dev environment ======================================"
                       
@@ -105,7 +104,7 @@ stages:
                      terraform init
                
                      echo ##############~~~~~~~~~~~~~~~Terraform Plan~~~~~~~~~~~~~~###############
-                     terraform plan -var-file=./input/dev.tfvars.json -out="out.plan" -var="client_id=$(client_id)" -var="client_secret=$(client_secret)" -var="tenant_id=$(tenant_id)" -var="subscription_id=$(subscription_id)" 
+                     terraform plan -var-file="../env/dev/dev-env.tfvars" -out="out.plan"
         
                     echo '#######Terraform Apply########'
 
