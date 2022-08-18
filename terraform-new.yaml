@@ -4,15 +4,9 @@
 # https://aka.ms/yaml
 
 trigger:
- paths:
-   include:
-     - 'src/code/input/*'
  branches:
    include:
     - main
-
-#variables:
-#    - template: variables.yml
   
 pool:
   vmImage: 'ubuntu-latest'
@@ -28,7 +22,7 @@ stages:
 
       - script: |
               ls $(System.DefaultWorkingDirectory)
-              echo "terraform build started.."
+              echo "Terraform build started.."
               cd $(System.DefaultWorkingDirectory)/platform
               echo "list all the files"
               ls 
@@ -40,18 +34,11 @@ stages:
     - job: Plan_Dev
       steps:
       - script: |
-              ls $(System.DefaultWorkingDirectory)
               echo "=====================List all the files of main folder============================"
               cd $(System.DefaultWorkingDirectory)/platform
-              
-              #echo "========================================== COPY File to dev environment ======================================"
-              
-              #cp -v -r * $(System.DefaultWorkingDirectory)/src/dev 
-              #cd $(System.DefaultWorkingDirectory)/src/dev
               echo "list all the files"
               ls 
-              ls ../env/dev
-              #az login --service-principal -u 290f6b48-7a20-4473-aea2-087b240ac884 -p BVL8Q~qPOsHHnaFLnLyHIw65mfQ5TT6UYO6sHbwB --tenant 6594e148-8146-4b66-b2ea-704e1a0d83c0
+              #Need to Add them as variables in ADO and secret values in Azure keyvault
               export ARM_CLIENT_ID="290f6b48-7a20-4473-aea2-087b240ac884"
               export ARM_CLIENT_SECRET="BVL8Q~qPOsHHnaFLnLyHIw65mfQ5TT6UYO6sHbwB"
               export ARM_SUBSCRIPTION_ID="78b403c6-7d6d-4d7f-b32c-5635479016fb"
@@ -67,8 +54,8 @@ stages:
             SourceFolder: '$(System.DefaultWorkingDirectory)/'
             Contents: |
                       **
-                      **/env/dev/*
-                      !dev/.terraform/**/*
+                      #**/env/dev/*
+                      #!dev/.terraform/**/*
             TargetFolder: '$(Build.ArtifactStagingDirectory)'
         displayName: 'Copy Artifacts'
 
@@ -92,16 +79,13 @@ stages:
                       ls $(Pipeline.Workspace)/dev_artifacts/
                       echo "=====================List all the files of main folder============================"
                       cd $(Pipeline.Workspace)/dev_artifacts/platform
-                      
-                      #echo "========================================== COPY File to dev environment ======================================"
-                      
-                      #cp -v -r * $(Pipeline.Workspace)/src/dev 
-                     #az login --service-principal -u $(client_id) -p $(client_secret) --tenant $(tenant_id)
+                      #Need to Add them as variables in ADO and secret values in Azure keyvault
                       export ARM_CLIENT_ID="290f6b48-7a20-4473-aea2-087b240ac884"
                       export ARM_CLIENT_SECRET="BVL8Q~qPOsHHnaFLnLyHIw65mfQ5TT6UYO6sHbwB"
                       export ARM_SUBSCRIPTION_ID="78b403c6-7d6d-4d7f-b32c-5635479016fb"
                       export ARM_TENANT_ID="6594e148-8146-4b66-b2ea-704e1a0d83c0"
                      terraform init
+                     #Workaround as it is giving permission denied error
                      chmod +x .terraform/providers/registry.terraform.io/hashicorp/azurerm/3.18.0/linux_amd64/terraform-provider-azurerm_v3.18.0_x5
                
                      echo ##############~~~~~~~~~~~~~~~Terraform Plan~~~~~~~~~~~~~~###############
