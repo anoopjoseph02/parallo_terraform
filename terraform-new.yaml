@@ -50,12 +50,12 @@ stages:
               #cd $(System.DefaultWorkingDirectory)/src/dev
               echo "list all the files"
               ls 
-              ls env/dev
+              ls platform/env/dev
               az login --service-principal -u 290f6b48-7a20-4473-aea2-087b240ac884 -p BVL8Q~qPOsHHnaFLnLyHIw65mfQ5TT6UYO6sHbwB --tenant 6594e148-8146-4b66-b2ea-704e1a0d83c0
               terraform init
                
                echo ##############~~~~~~~~~~~~~~~Terraform Plan~~~~~~~~~~~~~~###############
-              terraform plan -var-file="env/dev/dev-env.tfvars" -out="out.plan"
+              terraform plan -var-file="platform/env/dev/dev-env.tfvars" -out="out.plan"
         displayName: 'build stage'
     
       - task: CopyFiles@2
