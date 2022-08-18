@@ -1,7 +1,7 @@
 name: $(BuildDefinitionName)_$(date:yyyyMMdd)$(rev:.r)
 
-variables:
-  - group: azurefestivecalendar-develop
+#variables:
+#  - group: azurefestivecalendar-develop
   
 # Only run against develop
 trigger: none
