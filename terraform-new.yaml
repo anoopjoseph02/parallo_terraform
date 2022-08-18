@@ -12,26 +12,26 @@ pool:
   vmImage: 'ubuntu-latest'
 
 stages: 
-- stage: Setup
+- stage: Terraform Installation
   jobs:
-    - job: Setup
+    - job: Install Terraform
       steps:
       - task: TerraformInstaller@0
         inputs:
           terraformVersion: '0.13.2'
-
+#Not needed as it is just for debugging
       - script: |
               ls $(System.DefaultWorkingDirectory)
               echo "Terraform build started.."
               cd $(System.DefaultWorkingDirectory)/platform
               echo "list all the files"
               ls 
-        displayName: 'Setup Enviroment'
+        displayName: 'Verify files'
       
-- stage: Plan_Dev
-  dependsOn: [Setup]
+- stage: Terraform plan
+  dependsOn: [Terraform Installation]
   jobs:
-    - job: Plan_Dev
+    - job: Terraform plan
       steps:
       - script: |
               echo "=====================List all the files of main folder============================"
@@ -54,16 +54,14 @@ stages:
             SourceFolder: '$(System.DefaultWorkingDirectory)/'
             Contents: |
                       **
-                      #**/env/dev/*
-                      #!dev/.terraform/**/*
             TargetFolder: '$(Build.ArtifactStagingDirectory)'
         displayName: 'Copy Artifacts'
 
       - publish: '$(Build.ArtifactStagingDirectory)'
         artifact: dev_artifacts
 
-- stage: Apply_On_Dev
-  dependsOn: [Setup, Plan_Dev]
+- stage: Terraform Apply
+  dependsOn: [Terraform Installation, Terraform plan]
   jobs:
   - deployment: 
     displayName: DEV
@@ -94,4 +92,4 @@ stages:
                     echo '#######Terraform Apply########'
 
                     terraform apply out.plan
-              displayName: Apply
+              displayName: Terraform Apply
