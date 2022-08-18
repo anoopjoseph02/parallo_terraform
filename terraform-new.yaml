@@ -51,7 +51,11 @@ stages:
               echo "list all the files"
               ls 
               ls ../env/dev
-              az login --service-principal -u 290f6b48-7a20-4473-aea2-087b240ac884 -p BVL8Q~qPOsHHnaFLnLyHIw65mfQ5TT6UYO6sHbwB --tenant 6594e148-8146-4b66-b2ea-704e1a0d83c0
+              #az login --service-principal -u 290f6b48-7a20-4473-aea2-087b240ac884 -p BVL8Q~qPOsHHnaFLnLyHIw65mfQ5TT6UYO6sHbwB --tenant 6594e148-8146-4b66-b2ea-704e1a0d83c0
+              export ARM_CLIENT_ID="290f6b48-7a20-4473-aea2-087b240ac884"
+              export ARM_CLIENT_SECRET="BVL8Q~qPOsHHnaFLnLyHIw65mfQ5TT6UYO6sHbwB"
+              export ARM_SUBSCRIPTION_ID="78b403c6-7d6d-4d7f-b32c-5635479016fb"
+              export ARM_TENANT_ID="6594e148-8146-4b66-b2ea-704e1a0d83c0"
               terraform init
                
                echo ##############~~~~~~~~~~~~~~~Terraform Plan~~~~~~~~~~~~~~###############
