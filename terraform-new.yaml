@@ -67,6 +67,7 @@ stages:
             SourceFolder: '$(System.DefaultWorkingDirectory)/platform'
             Contents: |
                       **
+                      **/env/dev/*
                       !dev/.terraform/**/*
             TargetFolder: '$(Build.ArtifactStagingDirectory)'
         displayName: 'Copy Artifacts'
@@ -91,12 +92,17 @@ stages:
                       ls $(Pipeline.Workspace)/dev_artifacts/
                       echo "=====================List all the files of main folder============================"
                       cd $(Pipeline.Workspace)/dev_artifacts/
+                      ls $(Pipeline.Workspace)/dev_artifacts/
                       
                       #echo "========================================== COPY File to dev environment ======================================"
                       
                       #cp -v -r * $(Pipeline.Workspace)/src/dev 
-                     az login --service-principal -u $(client_id) -p $(client_secret) --tenant $(tenant_id)
-                     terraform init -backend-config="storage_account_name=$(tfBackendStorageAccountName)" -backend-config="container_name=$(tfBackendStorageContainerName)" -backend-config="access_key=$(tfBackendSAAccessKey)" -backend-config="key=$(tfBackendFileName)-dev"
+                     #az login --service-principal -u $(client_id) -p $(client_secret) --tenant $(tenant_id)
+                      export ARM_CLIENT_ID="290f6b48-7a20-4473-aea2-087b240ac884"
+                      export ARM_CLIENT_SECRET="BVL8Q~qPOsHHnaFLnLyHIw65mfQ5TT6UYO6sHbwB"
+                      export ARM_SUBSCRIPTION_ID="78b403c6-7d6d-4d7f-b32c-5635479016fb"
+                      export ARM_TENANT_ID="6594e148-8146-4b66-b2ea-704e1a0d83c0"
+                     terraform init
                
                      echo ##############~~~~~~~~~~~~~~~Terraform Plan~~~~~~~~~~~~~~###############
                      terraform plan -var-file=./input/dev.tfvars.json -out="out.plan" -var="client_id=$(client_id)" -var="client_secret=$(client_secret)" -var="tenant_id=$(tenant_id)" -var="subscription_id=$(subscription_id)" 
